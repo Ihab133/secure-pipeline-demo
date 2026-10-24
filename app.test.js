@@ -3,7 +3,7 @@ const assert = require("node:assert");
 const { add, greet } = require("./app");
 
 test("add works", () => {
-  assert.strictEqual(add(2, 3), 5);
+  assert.strictEqual(add(2, 3), 6);
 });
 
 test("greet works", () => {

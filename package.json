@@ -1,0 +1,8 @@
+{
+  "name": "secure-pipeline-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}

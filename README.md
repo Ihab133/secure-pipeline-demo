@@ -43,7 +43,7 @@ I committed fake secrets (never real ones) to see what would happen.
 
 I pushed deliberately unsafe code. The pipeline job was green, but the Security tab shows two alerts.
 
-![CodeQL alerts open] 
+![CodeQL alerts open] https://github.com/Ihab133/secure-pipeline-demo/blob/012a8543102b5c9127a09cbaaaed115ef935deaa/Screenshot%202026-10-25%20at%2015.06.00.png
 
 After replacing the dangerous calls and validating input, the alerts closed.
 

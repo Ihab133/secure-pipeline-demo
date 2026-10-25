@@ -1,10 +1,16 @@
-function runCommand(userInput) {
-  const { exec } = require("child_process");
-  exec("ls " + userInput);
-}
+const http = require("http");
+const { exec } = require("child_process");
 
-function showMessage(userInput) {
-  return "<div>" + userInput + "</div>";
-}
+http
+  .createServer((req, res) => {
+    const url = new URL(req.url, "http://localhost");
+    const name = url.searchParams.get("name");
 
-module.exports = { runCommand, showMessage };
+    // Command injection: user input goes straight into a shell command
+    exec("ls " + name, (err, output) => {
+      // Cross-site scripting: user input goes straight into the HTML response
+      res.setHeader("Content-Type", "text/html");
+      res.end("<div>" + name + "</div><pre>" + output + "</pre>");
+    });
+  })
+  .listen(3000);

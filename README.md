@@ -61,6 +61,17 @@ Then I tested it. I tried to push straight to `main` and GitHub rejected it with
 
 After that I did it the right way: created a branch, pushed it, opened a pull request, waited for the checks, and merged. Now the scanners are real gates.
 
+### 8. Checking the libraries I use
+My own code can be safe and a library I borrowed can still have holes. This is what happened with Log4Shell, where one small library put a huge number of systems at risk.
+
+To test this, I installed an old version of lodash (4.17.15) on purpose in a separate branch. Then I ran `npm audit`, which reported 1 high-severity vulnerability made up of 6 known advisories, including command injection, code injection, prototype pollution and ReDoS.
+
+I added `npm audit --audit-level=high` as a step in my pipeline. On the pull request, the check turned red and the merge button was blocked, so the vulnerable library never reached `main`.
+
+Then I updated lodash to the latest version, `npm audit` reported 0 vulnerabilities, the check turned green, and I merged.
+
+One thing I noticed: Dependabot alerts showed nothing at first. It only scans the default branch (`main`), and the vulnerable version only lived on my branch. So the `npm audit` step in the pipeline caught it earlier than Dependabot would have.
+
 ## What I learned so far
 
 - Push protection and Gitleaks catch different things, so having both is better than one.

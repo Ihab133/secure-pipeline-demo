@@ -47,7 +47,7 @@ I pushed deliberately unsafe code. The pipeline job was green, but the Security 
 
 After replacing the dangerous calls and validating input, the alerts closed.
 
-![CodeQL alerts closed]
+![CodeQL alerts closed] https://github.com/Ihab133/secure-pipeline-demo/blob/3a6ade6253a710ef7790aa1f6f6cc28599b9b2d8/Screenshot%202026-10-25%20at%2015.06.11.png
 
 ## What I learned so far
 

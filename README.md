@@ -39,6 +39,16 @@ I committed fake secrets (never real ones) to see what would happen.
 - **My first generic fake secret got through Gitleaks.** The pipeline said "no leaks detected". The string wasn't random enough, so the scanner skipped it.
 - **A more realistic fake secret failed the pipeline.** With names like `secret_key` and `api_token` and a random-looking value, Gitleaks turned the step red and showed the file, the line, and the rule that matched.
 
+### CodeQL finds two flaws
+
+I pushed deliberately unsafe code. The pipeline job was green, but the Security tab shows two alerts.
+
+![CodeQL alerts open] 
+
+After replacing the dangerous calls and validating input, the alerts closed.
+
+![CodeQL alerts closed]
+
 ## What I learned so far
 
 - Push protection and Gitleaks catch different things, so having both is better than one.

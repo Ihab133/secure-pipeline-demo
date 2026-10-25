@@ -49,6 +49,18 @@ After replacing the dangerous calls and validating input, the alerts closed.
 
 ![CodeQL alerts closed] https://github.com/Ihab133/secure-pipeline-demo/blob/3a6ade6253a710ef7790aa1f6f6cc28599b9b2d8/Screenshot%202026-10-25%20at%2015.06.11.png
 
+### 7. Making the gates actually block things
+I noticed a problem: by the time the scans finished, the unsafe code was **already on `main`**. The scanners only reported. They didn't stop anything.
+
+So I set up a **branch protection ruleset** on `main`:
+- No direct pushes, changes must go through a pull request.
+- Required checks must pass before merging.
+- No force pushes and no deleting `main`.
+
+Then I tested it. I tried to push straight to `main` and GitHub rejected it with a rule violation message.
+
+After that I did it the right way: created a branch, pushed it, opened a pull request, waited for the checks, and merged. Now the scanners are real gates.
+
 ## What I learned so far
 
 - Push protection and Gitleaks catch different things, so having both is better than one.

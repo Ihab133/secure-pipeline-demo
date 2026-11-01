@@ -72,6 +72,19 @@ Then I updated lodash to the latest version, `npm audit` reported 0 vulnerabilit
 
 One thing I noticed: Dependabot alerts showed nothing at first. It only scans the default branch (`main`), and the vulnerable version only lived on my branch. So the `npm audit` step in the pipeline caught it earlier than Dependabot would have.
 
+### 9. Separating Dev and Production
+In the TryHackMe room, one case study showed a build agent shared between Dev and Prod. A compromised Dev build could then wait on that agent until a Prod build ran and slip its code into production.
+
+I built the safe version with **GitHub environments**. I created two:
+- `dev`: no rules, it's the playground.
+- `prod`: requires a reviewer. I added myself, so a human has to approve before anything deploys there.
+
+Then I wrote `deploy.yml` with two jobs. `deploy-dev` runs first. `deploy-prod` waits for it (`needs: deploy-dev`) and then pauses until I approve. Each job runs on its own fresh runner, so Dev and Prod never share a build machine.
+
+The jobs only print a message, since I have no real server. The approval gate is what I wanted to test.
+
+After I clicked Approve, the prod job ran.
+
 ## What I learned so far
 
 - Push protection and Gitleaks catch different things, so having both is better than one.
